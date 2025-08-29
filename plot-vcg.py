@@ -27,13 +27,28 @@ def load_ecg_record():
     print("VCG created using Kors transformation.")
     print("VCG record channels:", vcg_record.sig_name)
     
-    # Optional: Apply preprocessing (remove baseline wandering, slice)
-    filtered_record = preprocessing.remove_baseline_wandering(vcg_record)
-    sliced_record = preprocessing.recslice(filtered_record, sampfrom=0, sampto=3000)
+    # # Fix the comments issue - initialize comments if None
+    # if vcg_record.comments is None:
+    #     vcg_record.comments = []
+    
+    # # Apply preprocessing (remove baseline wandering, then slice)
+    # try:
+    #     filtered_record = preprocessing.remove_baseline_wandering(vcg_record)
+    #     sliced_record = preprocessing.recslice(filtered_record, sampfrom=0, sampto=3000)
+    # except Exception as e:
+    #     print(f"Warning: Baseline wandering removal failed: {e}")
+    #     print("Using original VCG record without filtering...")
+    #     sliced_record = preprocessing.recslice(vcg_record, sampfrom=0, sampto=3000)
     
     # Plot VCG using CardioVectorLib - 3D and frontal view
+    kors_record = rec.kors_vcg(record)
+    print(kors_record)
+    print(kors_record.printing())
+    plotting.plotrecs([record, kors_record], 
+                  signals=['vx', 'vy', 'vz'], labels=['frank', 'kors'], 
+                  fig_kw={'figsize': (12,7)})
     print("Plotting VCG in 3D and frontal view...")
-    plotting.plotvcg(sliced_record, 
+    plotting.plotvcg(vcg_record, 
                     signals=['vx', 'vy', 'vz'],
                     plot=['3d', 'frontal'])
     plt.tight_layout()
@@ -41,7 +56,7 @@ def load_ecg_record():
     
     # Plot all VCG views (3D + all 2D projections)
     print("Plotting all VCG views...")
-    plotting.plotvcg(sliced_record, 
+    plotting.plotvcg(vcg_record, 
                     signals=['vx', 'vy', 'vz'],
                     plot='all')
     plt.show()
@@ -49,18 +64,18 @@ def load_ecg_record():
     # Optional: Plot original ECG record for comparison
     print("Plotting original ECG record...")
     plotting.plotrecs([record], 
-                     signals=[['i', 'ii', 'v1', 'v2', 'v3', 'v4']],
+                     signals=['i', 'ii', 'v1', 'v2', 'v3', 'v4'],
                      labels=['Original 12-lead ECG'],
                      fig_kw={'figsize': (15, 8)})
     plt.show()
     
     # Optional: Compare original ECG with VCG
     print("Plotting ECG vs VCG comparison...")
-    plotting.plotrecs([record, sliced_record],
-                     signals=[['i', 'ii', 'v1'], ['vx', 'vy', 'vz']],
-                     labels=['Original ECG', 'Kors VCG'],
-                     fig_kw={'figsize': (12, 7)})
-    plt.show()
+    # plotting.plotrecs([record, vcg_record],
+    #                  signals=['i', 'ii', 'v1', 'vx', 'vy', 'vz'],
+    #                  labels=['Original ECG', 'Kors VCG'],
+    #                  fig_kw={'figsize': (12, 7)})
+    # plt.show()
 
 if __name__ == "__main__":
     load_ecg_record()

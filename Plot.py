@@ -10,6 +10,7 @@ import wfdb
 from CardioVectorLib.cardiovector import plotting
 from CardioVectorLib.cardiovector import preprocessing
 from CardioVectorLib.cardiovector import preprocessing as prep
+from CardioVectorLib.cardiovector import reconstruction as rec
 def ecg_to_vcg_kors(ecg_data):
     """
     Convert 12-lead ECG to VCG using Kors transformation matrix.
@@ -346,6 +347,7 @@ if __name__ == "__main__":
     print("=== Loading ECG data from CSV ===")
     csv_path = "40689238.csv"
     ecg_df = load_ecg_from_csv(csv_path)
+    
     record_name = "/Users/alinawaf/Desktop/Research/ECG-VECG/MIMIC_Dataset/s40689238/40689238"
     record = wfdb.rdrecord(record_name)
 
