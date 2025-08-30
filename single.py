@@ -309,7 +309,7 @@ def analyze_single_heartbeat():
         vcg_record = create_manual_vcg(record)
     
     # Extract different single heartbeats
-    beat_numbers = [0, 1, 2, 3]  # First 4 beats
+    beat_numbers = [0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15]  # First 4 beats
     
     for beat_num in beat_numbers:
         print(f"\n=== ANALYZING HEARTBEAT {beat_num} ===")
@@ -336,12 +336,12 @@ def create_manual_vcg(original_record):
     V5 = signals[:, lead_map['v5']]
     V6 = signals[:, lead_map['v6']]
     
-    VX = (0.38 * I + 0.07 * II - 0.13 * V1 + 0.05 * V2 - 0.01 * V3 + 
+    VX = (0.38 * I - 0.07 * II - 0.13 * V1 + 0.05 * V2 - 0.01 * V3 + 
           0.14 * V4 + 0.06 * V5 + 0.54 * V6)
-    VY = (0.11 * I - 0.23 * II + 0.06 * V1 - 0.02 * V2 + 0.05 * V3 + 
+    VY = (-0.07 * I - 0.93 * II + 0.06 * V1 - 0.02 * V2 + 0.05 * V3 + 
           0.06 * V4 - 0.17 * V5 + 0.13 * V6)
-    VZ = (-0.08 * I + 0.06 * II - 0.36 * V1 + 0.14 * V2 - 0.27 * V3 + 
-          0.21 * V4 - 0.10 * V5 + 0.06 * V6)
+    VZ = (0.11 * I - 0.23 * II - 0.43 * V1 - 0.06 * V2 - 0.14 * V3 - 
+          0.20 * V4 - 0.11 * V5 + 0.31 * V6)
     
     vcg_signals = np.column_stack([VX, VY, VZ])
     
