@@ -1,0 +1,45 @@
+Running on device: cuda
+
+========================================
+🚀 STARTING XGBOOST STACKING PIPELINE
+========================================
+1. Loading and Filtering Metadata...
+   Total valid records: 20718
+   Training XGBoost on Fold 9 (n=2058)
+   Testing XGBoost on Fold 10 (n=2064)
+
+2. Generating ECG Predictions...
+   ... Loading ECG_Model from /content/drive/MyDrive/CNN/Best/resnet50_age_ECG_Only_best.pth
+Predicting ECG_Model: 100%
+ 33/33 [00:06<00:00,  5.79it/s]
+   ... Loading ECG_Model from /content/drive/MyDrive/CNN/Best/resnet50_age_ECG_Only_best.pth
+Predicting ECG_Model: 100%
+ 33/33 [00:06<00:00,  5.74it/s]
+
+3. Generating VCG Predictions...
+   ... Loading VCG_Model from /content/drive/MyDrive/CNN/Best/resnet50_age_VCG_Only_best.pth
+Predicting VCG_Model: 100%
+ 33/33 [00:06<00:00,  5.73it/s]
+   ... Loading VCG_Model from /content/drive/MyDrive/CNN/Best/resnet50_age_VCG_Only_best.pth
+Predicting VCG_Model: 100%
+ 33/33 [00:06<00:00,  5.71it/s]
+
+4. formatting Data for XGBoost...
+   Train Input Shape: (2058, 2)
+   Test Input Shape:  (2064, 2)
+
+5. Training XGBoost...
+
+6. Final Evaluation (Test Set Fold 10)...
+------------------------------
+Single Model - ECG Only MAE: 8.4965
+Single Model - VCG Only MAE: 8.7941
+------------------------------
+🏆 XGBoost Ensemble MAE:     7.9438
+   XGBoost Ensemble RMSE:    10.4129
+------------------------------
+✅ XGBoost model saved to: /content/drive/MyDrive/CNN/Best/xgboost_stacking_model.json
+
+Feature Importance:
+   ECG Weight: 0.7638
+   VCG Weight: 0.2362

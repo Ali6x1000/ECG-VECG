@@ -1,0 +1,41 @@
+Running on device: cuda
+
+========================================
+🧬 DEEP FEATURE FUSION (ResNet Features -> XGBoost)
+========================================
+1. Loading Metadata...
+
+2. Loading Models as Feature Extractors...
+
+3. Extracting Deep Features (This may take a moment)...
+   -> Processing Train Set (ECG)...
+   ... Extracting features from ECG
+   -> Processing Train Set (VCG)...
+   ... Extracting features from VCG
+   -> Processing Test Set (ECG)...
+   ... Extracting features from ECG
+   -> Processing Test Set (VCG)...
+   ... Extracting features from VCG
+
+4. Stacking Features...
+   Train Input Shape: (2058, 4096) (Rows, Features)
+   Test Input Shape:  (2064, 4096) (Rows, Features)
+
+5. Training XGBoost on Deep Features...
+[0]	validation_0-rmse:16.35925
+[50]	validation_0-rmse:12.88967
+[100]	validation_0-rmse:11.35471
+[150]	validation_0-rmse:10.73485
+[200]	validation_0-rmse:10.50363
+[250]	validation_0-rmse:10.42171
+[300]	validation_0-rmse:10.39608
+[350]	validation_0-rmse:10.38629
+[399]	validation_0-rmse:10.39058
+
+6. Final Evaluation...
+------------------------------
+🏆 Deep Feature Fusion MAE:  7.9326
+   Deep Feature Fusion MSE:  107.8435
+   Deep Feature Fusion RMSE: 10.3848
+------------------------------
+Saved model to /content/drive/MyDrive/CNN/Best/xgboost_deep_feature_fusion.json

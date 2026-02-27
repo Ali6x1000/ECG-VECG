@@ -20,11 +20,36 @@ def copy_record(r: wfdb.Record):
     assert isinstance(r, wfdb.Record)
 
     def c_(a): return None if a is None else np.array(a, copy=True)
-    return wfdb.Record(c_(r.p_signal), c_(r.d_signal), c_(r.e_p_signal), c_(r.e_d_signal),
-                       r.record_name, r.n_sig, r.fs, r.counter_freq, r.base_counter, r.sig_len,
-                       r.base_time, r.base_date, r.file_name, r.fmt, r.samps_per_frame, r.skew, r.byte_offset,
-                       r.adc_gain, r.baseline, r.units, r.adc_res, r.adc_zero, r.init_value, r.checksum, r.block_size,
-                       r.sig_name, r.comments)
+    return wfdb.Record(
+    p_signal=c_(r.p_signal),
+    d_signal=c_(r.d_signal),
+    e_p_signal=c_(r.e_p_signal),
+    e_d_signal=c_(r.e_d_signal),
+    record_name=r.record_name,
+    n_sig=r.n_sig,
+    fs=r.fs,
+    counter_freq=r.counter_freq,
+    base_counter=r.base_counter,
+    sig_len=r.sig_len,
+    base_time=r.base_time,
+    base_date=r.base_date,
+    file_name=r.file_name,
+    fmt=r.fmt,
+    samps_per_frame=r.samps_per_frame,
+    skew=r.skew,
+    byte_offset=r.byte_offset,
+    adc_gain=r.adc_gain,
+    baseline=r.baseline,
+    units=r.units,
+    adc_res=r.adc_res,
+    adc_zero=r.adc_zero,
+    init_value=r.init_value,
+    checksum=r.checksum,
+    block_size=r.block_size,
+    sig_name=r.sig_name,
+    comments=r.comments,
+)
+
 
 
 def get_analog(r: wfdb.Record) -> np.ndarray:

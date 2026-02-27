@@ -2,7 +2,7 @@ import wfdb
 import pandas as pd
 
 # Read the record (without the file extension)
-record_name = '/Users/alinawaf/Desktop/Research/ECG-VECG/MIMIC_Dataset/s40689238/40689238'
+record_name = '//Users/alinawaf/Desktop/Research/ECG-VECG/Output/00001_-0_0000/00001_-0_0000'
 record = wfdb.rdrecord(record_name)
 
 # Extract signal data and channel names

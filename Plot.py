@@ -6,7 +6,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 import matplotlib.pyplot as plt
 import wfdb
-
 from CardioVectorLib.cardiovector import plotting
 from CardioVectorLib.cardiovector import preprocessing
 from CardioVectorLib.cardiovector import preprocessing as prep

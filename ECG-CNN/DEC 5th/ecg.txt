@@ -1,0 +1,43 @@
+========================================
+STARTING AGE REGRESSION: ECG_Only
+========================================
+🛠️ ECG_Only cache not found. Generating from pickle...
+Building Cache: 100%
+ 20718/20718 [00:09<00:00, 2474.92it/s]
+⚡ Loading 16596 images into RAM...
+⚡ Loading 2058 images into RAM...
+⚡ Loading 2064 images into RAM...
+Epoch 1: Train MAE: 17.52 | Val MAE: 11.08
+  >>> Saved Best Model
+Epoch 2: Train MAE: 8.57 | Val MAE: 9.25
+  >>> Saved Best Model
+Epoch 3: Train MAE: 8.09 | Val MAE: 8.64
+  >>> Saved Best Model
+Epoch 4: Train MAE: 7.61 | Val MAE: 8.44
+  >>> Saved Best Model
+Epoch 5: Train MAE: 7.03 | Val MAE: 10.86
+Epoch 6: Train MAE: 6.35 | Val MAE: 8.20
+  >>> Saved Best Model
+Epoch 7: Train MAE: 5.61 | Val MAE: 8.53
+Epoch 8: Train MAE: 4.96 | Val MAE: 9.61
+Epoch 9: Train MAE: 4.41 | Val MAE: 9.12
+Epoch 10: Train MAE: 4.05 | Val MAE: 8.64
+Epoch 11: Train MAE: 3.24 | Val MAE: 8.29
+Epoch 12: Train MAE: 2.74 | Val MAE: 8.45
+Epoch 13: Train MAE: 2.44 | Val MAE: 8.48
+🛑 Early stopping triggered.
+
+========================================
+🔎 RUNNING FINAL TEST ON: ECG_Only
+========================================
+Loading best weights from: /content/drive/MyDrive/CNN/Best/resnet50_age_ECG_Only_best.pth
+Testing: 100%
+ 65/65 [00:06<00:00, 11.99it/s]
+
+🏆 FINAL TEST RESULTS for ECG_Only:
+   MSE : 121.8399
+   RMSE: 11.0381
+   MAE : 8.4965
+========================================
+
+

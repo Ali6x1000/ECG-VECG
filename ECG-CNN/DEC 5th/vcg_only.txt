@@ -1,0 +1,71 @@
+STARTING AGE REGRESSION: VCG_Only
+========================================
+🛠️ VCG_Only cache not found. Generating from pickle...
+Building Cache: 100%
+ 20718/20718 [00:10<00:00, 1785.98it/s]
+⚡ Loading 16596 images into RAM...
+⚡ Loading 2058 images into RAM...
+⚡ Loading 2064 images into RAM...
+Epoch 1: Train MAE: 17.42 | Val MAE: 10.02
+  >>> Saved Best Model
+Epoch 2: Train MAE: 8.93 | Val MAE: 9.46
+  >>> Saved Best Model
+Epoch 3: Train MAE: 7.95 | Val MAE: 9.21
+  >>> Saved Best Model
+Epoch 4: Train MAE: 6.88 | Val MAE: 9.88
+Epoch 5: Train MAE: 5.64 | Val MAE: 9.68
+Epoch 6: Train MAE: 4.82 | Val MAE: 9.38
+Epoch 7: Train MAE: 4.24 | Val MAE: 9.84
+Epoch 8: Train MAE: 3.40 | Val MAE: 9.10
+  >>> Saved Best Model
+Epoch 9: Train MAE: 2.71 | Val MAE: 9.05
+  >>> Saved Best Model
+Epoch 10: Train MAE: 2.48 | Val MAE: 9.34
+Epoch 11: Train MAE: 2.38 | Val MAE: 9.08
+Epoch 12: Train MAE: 2.34 | Val MAE: 9.19
+Epoch 13: Train MAE: 2.25 | Val MAE: 9.15
+Epoch 14: Train MAE: 1.95 | Val MAE: 9.11
+Epoch 15: Train MAE: 1.64 | Val MAE: 9.03
+  >>> Saved Best Model
+Epoch 16: Train MAE: 1.56 | Val MAE: 8.95
+  >>> Saved Best Model
+Epoch 17: Train MAE: 1.48 | Val MAE: 9.04
+Epoch 18: Train MAE: 1.41 | Val MAE: 8.99
+Epoch 19: Train MAE: 1.43 | Val MAE: 8.90
+  >>> Saved Best Model
+Epoch 20: Train MAE: 1.38 | Val MAE: 8.89
+  >>> Saved Best Model
+Epoch 21: Train MAE: 1.34 | Val MAE: 8.93
+Epoch 22: Train MAE: 1.32 | Val MAE: 9.15
+Epoch 23: Train MAE: 1.28 | Val MAE: 9.08
+Epoch 24: Train MAE: 1.28 | Val MAE: 9.11
+Epoch 25: Train MAE: 1.15 | Val MAE: 8.92
+Epoch 26: Train MAE: 1.00 | Val MAE: 8.93
+Epoch 27: Train MAE: 0.94 | Val MAE: 8.84
+  >>> Saved Best Model
+Epoch 28: Train MAE: 0.94 | Val MAE: 8.92
+Epoch 29: Train MAE: 0.93 | Val MAE: 8.93
+Epoch 30: Train MAE: 0.91 | Val MAE: 8.86
+Epoch 31: Train MAE: 0.88 | Val MAE: 8.86
+Epoch 32: Train MAE: 0.84 | Val MAE: 8.82
+  >>> Saved Best Model
+Epoch 33: Train MAE: 0.77 | Val MAE: 8.92
+Epoch 34: Train MAE: 0.73 | Val MAE: 8.89
+Epoch 35: Train MAE: 0.74 | Val MAE: 8.90
+Epoch 36: Train MAE: 0.73 | Val MAE: 8.87
+Epoch 37: Train MAE: 0.71 | Val MAE: 8.89
+Epoch 38: Train MAE: 0.69 | Val MAE: 8.86
+Epoch 39: Train MAE: 0.67 | Val MAE: 8.87
+🛑 Early stopping triggered.
+
+========================================
+🔎 RUNNING FINAL TEST ON: VCG_Only
+========================================
+Loading best weights from: /content/drive/MyDrive/CNN/Best/resnet50_age_VCG_Only_best.pth
+Testing: 100%
+ 65/65 [00:06<00:00, 12.06it/s]
+
+🏆 FINAL TEST RESULTS for VCG_Only:
+   MSE : 132.6767
+   RMSE: 11.5185
+   MAE : 8.7941

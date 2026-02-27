@@ -1,0 +1,76 @@
+Running on device: cuda
+Loading metadata from /content/drive/MyDrive/CNN/ptbxl_database.csv...
+Filtered ages 18-85: Dropped 1081 records.
+✅ Metadata loaded. 20718 records ready.
+📊 Age Statistics (After Filter):
+   Range: 18.0 - 85.0
+
+========================================
+STARTING AGE REGRESSION: Both
+========================================
+🛠️ Both cache not found. Generating from pickle...
+/tmp/ipython-input-2755785216.py:100: DeprecationWarning: numpy.core.numeric is deprecated and has been renamed to numpy._core.numeric. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core.numeric._frombuffer.
+  pickle_data = pickle.load(f)
+Building Cache: 100%
+ 20718/20718 [00:09<00:00, 2055.17it/s]
+⚡ Loading 16596 images into RAM...
+⚡ Loading 2058 images into RAM...
+⚡ Loading 2064 images into RAM...
+Epoch 1: Train MAE: 17.27 | Val MAE: 9.05
+  >>> Saved Best Model
+Epoch 2: Train MAE: 8.38 | Val MAE: 11.28
+Epoch 3: Train MAE: 7.45 | Val MAE: 8.34
+  >>> Saved Best Model
+Epoch 4: Train MAE: 6.45 | Val MAE: 10.76
+Epoch 5: Train MAE: 5.39 | Val MAE: 8.66
+Epoch 6: Train MAE: 4.53 | Val MAE: 8.35
+Epoch 7: Train MAE: 4.11 | Val MAE: 9.19
+Epoch 8: Train MAE: 3.28 | Val MAE: 8.33
+  >>> Saved Best Model
+Epoch 9: Train MAE: 2.66 | Val MAE: 8.18
+  >>> Saved Best Model
+Epoch 10: Train MAE: 2.45 | Val MAE: 8.31
+Epoch 11: Train MAE: 2.41 | Val MAE: 8.19
+Epoch 12: Train MAE: 2.28 | Val MAE: 8.19
+Epoch 13: Train MAE: 2.23 | Val MAE: 8.68
+Epoch 14: Train MAE: 1.96 | Val MAE: 8.46
+Epoch 15: Train MAE: 1.74 | Val MAE: 8.24
+Epoch 16: Train MAE: 1.64 | Val MAE: 8.18
+  >>> Saved Best Model
+Epoch 17: Train MAE: 1.58 | Val MAE: 8.35
+Epoch 18: Train MAE: 1.42 | Val MAE: 8.05
+  >>> Saved Best Model
+Epoch 19: Train MAE: 1.31 | Val MAE: 8.13
+Epoch 20: Train MAE: 1.23 | Val MAE: 8.31
+Epoch 21: Train MAE: 1.21 | Val MAE: 8.11
+Epoch 22: Train MAE: 1.16 | Val MAE: 8.20
+Epoch 23: Train MAE: 1.05 | Val MAE: 8.06
+Epoch 24: Train MAE: 1.08 | Val MAE: 8.03
+  >>> Saved Best Model
+Epoch 25: Train MAE: 1.05 | Val MAE: 8.12
+Epoch 26: Train MAE: 0.96 | Val MAE: 8.09
+Epoch 27: Train MAE: 0.99 | Val MAE: 8.41
+Epoch 28: Train MAE: 0.93 | Val MAE: 8.07
+Epoch 29: Train MAE: 0.88 | Val MAE: 8.03
+  >>> Saved Best Model
+Epoch 30: Train MAE: 0.92 | Val MAE: 8.05
+Epoch 31: Train MAE: 0.89 | Val MAE: 8.06
+Epoch 32: Train MAE: 0.86 | Val MAE: 8.05
+Epoch 33: Train MAE: 0.85 | Val MAE: 8.09
+Epoch 34: Train MAE: 0.83 | Val MAE: 8.04
+Epoch 35: Train MAE: 0.80 | Val MAE: 8.31
+Epoch 36: Train MAE: 0.80 | Val MAE: 8.18
+🛑 Early stopping triggered.
+
+========================================
+🔎 RUNNING FINAL TEST ON: Both
+========================================
+Loading best weights from: /content/drive/MyDrive/CNN/Best/resnet50_age_Both_best.pth
+Testing: 100%
+ 65/65 [00:07<00:00,  5.76it/s]
+
+🏆 FINAL TEST RESULTS for Both:
+   MSE : 108.1776
+   RMSE: 10.4008
+   MAE : 7.9913
+====================

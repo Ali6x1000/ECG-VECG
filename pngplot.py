@@ -15,24 +15,9 @@ plt.rcParams['font.size'] = 9.5
 # Constants
 MM_PER_MV = 10
 MM_PER_SEC = 25
-SAMPLING_RATE = 500  # Hz
+SAMPLING_RATE = 500  # Default sampling rate for these records
 
 # === Preprocessing ===
-def read_wfdb_to_csv(record_path: Path, output_dir: Path) -> Path:
-    record = wfdb.rdrecord(str(record_path))
-    df = pd.DataFrame(record.p_signal, columns=record.sig_name)
-    csv_path = output_dir / f"{record_path.stem}.csv"
-    df.to_csv(csv_path, index=False)
-    print(f"Saved CSV: {csv_path}")
-    return csv_path
-
-def load_ecg_csv(csv_path: Path) -> pd.DataFrame:
-    df = pd.read_csv(csv_path, sep=None, engine='python')
-    df.columns = df.columns.str.strip()
-    for col in df.columns:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-    return df.dropna(how='all').dropna(axis=1, how='all')
-
 def apply_baseline_correction(df: pd.DataFrame, sampling_rate: float = SAMPLING_RATE, cutoff_hz: float = 0.67) -> pd.DataFrame:
     """High-pass filter to remove baseline wander."""
     nyquist = 0.5 * sampling_rate
@@ -42,30 +27,48 @@ def apply_baseline_correction(df: pd.DataFrame, sampling_rate: float = SAMPLING_
     filtered_df = df.copy()
     for col in df.columns:
         if pd.api.types.is_numeric_dtype(df[col]):
-            filtered_df[col] = filtfilt(b, a, df[col].values)
+            # Ensure column has no NaNs before filtering
+            col_data = df[col].dropna()
+            if not col_data.empty:
+                 filtered_df[col] = filtfilt(b, a, df[col].values)
     return filtered_df
 
 # === Plotting ===
-def plot_ecg_from_csv(csv_path: Path, output_path: Path, show_separators: bool = True):
-    ecg_data = apply_baseline_correction(load_ecg_csv(csv_path))
-    if ecg_data.empty:
-        print("No valid ECG data loaded")
+def create_ecg_plot_from_wfdb(record_path: Path, output_path: Path, show_separators: bool = True):
+    """
+    Reads a WFDB record, preprocesses it, and plots it directly to a PNG file.
+    """
+    # Step 1: Read the WFDB record and convert it directly to a DataFrame
+    try:
+        record = wfdb.rdrecord(str(record_path))
+        ecg_data = pd.DataFrame(record.p_signal, columns=record.sig_name)
+    except Exception as e:
+        print(f"Error reading WFDB record {record_path}: {e}")
         return
 
+    # Step 2: Apply preprocessing
+    ecg_data = apply_baseline_correction(ecg_data)
+
+    if ecg_data.empty:
+        print("No valid ECG data after preprocessing")
+        return
+
+    # Step 3: Create the plot
     fig = plt.figure(figsize=(11, 8.5), dpi=100)
- 
     ax = _create_ecg_axes(fig)
 
     total_samples = len(ecg_data)
     _configure_axes_grid(ax, total_samples)
     _plot_ecg_leads(ax, ecg_data, total_samples, show_separators=show_separators)
 
+    # Step 4: Save the plot
     output_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_path, bbox_inches='tight')
     plt.close()
     print(f"ECG plot saved to {output_path}")
 
 def _add_demographic_text(fig: plt.Figure):
+    # This function is not called but is preserved as requested.
     demo_text = [
         ("Patient: DOE, JOHN", 0.17, 8.04),
         ("ID: 123456789", 3.05, 8.04),
@@ -93,12 +96,20 @@ def _create_ecg_axes(fig: plt.Figure) -> plt.Axes:
     y_max = height * 25.4 / MM_PER_MV
     ax.set_ylim(0, y_max)
     ax.tick_params(which='both', left=False, bottom=False, labelleft=False, labelbottom=False)
+
+    # --- CHANGE HERE ---
+    # Explicitly set the background to white
+    ax.set_facecolor('white')
+    # Remove the boundary box/frame around the plot
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
     return ax
 
 def _configure_axes_grid(ax: plt.Axes, total_samples: int):
     ax.set_xlim(0, total_samples)
 
-    samples_per_mm = SAMPLING_RATE / MM_PER_SEC  # 20 samples/mm
+    samples_per_mm = SAMPLING_RATE / MM_PER_SEC
     small_x_step = samples_per_mm
     big_x_step = small_x_step * 5
 
@@ -111,8 +122,10 @@ def _configure_axes_grid(ax: plt.Axes, total_samples: int):
     ax.set_yticks(np.arange(0, y1 + 1e-6, big_y_step))
     ax.set_yticks(np.arange(0, y1 + 1e-6, small_y_step), minor=True)
 
-    ax.grid(which='major', color='red', linestyle='-', linewidth=0.4)
-    ax.grid(which='minor', color='red', linestyle=':', linewidth=0.2)
+    # --- CHANGE HERE ---
+    # Comment out or delete these two lines to remove the grid
+    # ax.grid(which='major', color='red', linestyle='-', linewidth=0.4)
+    # ax.grid(which='minor', color='red', linestyle=':', linewidth=0.2)
 
 def _plot_ecg_leads(ax: plt.Axes, ecg_data: pd.DataFrame, total_samples: int, show_separators: bool = True):
     leads_layout = [
@@ -141,32 +154,37 @@ def _plot_ecg_leads(ax: plt.Axes, ecg_data: pd.DataFrame, total_samples: int, sh
             seg_end = total_samples if col_idx == total_columns - 1 else (col_idx + 1) * segment_length
             offset = (total_rows - row_idx - 0.5) * y_offset
             ax.plot(np.arange(seg_start, seg_end), data[lead].values[seg_start:seg_end] + offset, linewidth=0.6, color='black')
-            # _add_lead_label(ax, seg_start + 5, offset - 0.25, lead)  # lowered by 0.25
+            # _add_lead_label(ax, seg_start + 5, offset - 0.25, lead)
 
     # Rhythm strips
     for i, lead in enumerate(rhythm_strips):
         if lead in data.columns:
             offset = (total_rows - (3 + i) - 0.5) * y_offset
             ax.plot(np.arange(total_samples), data[lead].values[:total_samples] + offset, linewidth=0.6, color='black')
-            # _add_lead_label(ax, 5, offset - 0.25, lead)  # lowered by 0.25
+            # _add_lead_label(ax, 5, offset - 0.25, lead)
 
-    # Optional separators
     if show_separators:
         for x in boundaries:
             ax.axvline(x=x, ymin=0, ymax=1, color='red', linewidth=0.4, alpha=0.6)
 
 def _add_lead_label(ax: plt.Axes, x_pos: float, y_pos: float, text: str):
+    # This function is not called but is preserved as requested.
     ax.text(x_pos, y_pos, text, ha='left', va='top', weight='bold')
 
 # ==== MAIN ====
 if __name__ == '__main__':
+    # Define the input record path (without file extension)
     record_path = Path('/Users/alinawaf/Desktop/Research/ECG-VECG/MIMIC_Dataset/s40689238/40689238')
+    
+    # Define the output directory and filename for the image
     output_dir = Path('/Users/alinawaf/Desktop/Research/ECG-VECG')
-    output_img = output_dir / f"{record_path.stem}.png"
+    output_img_path = output_dir / f"{record_path.stem}.png"
 
-    csv_file = read_wfdb_to_csv(record_path, output_dir)
-    plot_ecg_from_csv(csv_file, output_img, show_separators=False)
+    # Run the main function
+    create_ecg_plot_from_wfdb(record_path, output_img_path, show_separators=False)
+
+    # Display the final image in the notebook
     try:
-        display(Image(filename=str(output_img)))
-    except Exception:
-        pass
+        display(Image(filename=str(output_img_path)))
+    except Exception as e:
+        print(f"Could not display image. Make sure you are in a notebook environment. Error: {e}")
